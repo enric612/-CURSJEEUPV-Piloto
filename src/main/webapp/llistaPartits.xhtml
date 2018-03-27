@@ -12,6 +12,22 @@
     <body>
         <f:view>
             <h:form id="partitsList">
+                <!-- Filtres -->
+                <h:panelGrid id="FilterGrid" columns="2">
+                    <h:panelGroup>
+                        <h:outputText value="Filtre per Jornada" />
+                        <h:selectOneMenu onchange="this.form.submit()" valueChangeListener="#{partitBean.filtrarListener}">
+                            <f:selectItem itemValue="Totes" itemLabel="Totes"/>
+                            <f:selectItems value="#{lligaBean.jornades}"/>
+                        </h:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="Filtre per Equip" />
+                        <h:inputText value="#{partitBean.equip}" />
+                        <h:commandButton value="Aplicar" actionListener="#{partitBean.filtrarPerEquipListener}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <!-- Fi Filtres -->
                 <!-- TABLA -->
                 <h:dataTable id="partits" value="#{partitBean.llistaDePartits}" var="partit">
                     <!-- Columna Jornada -->
@@ -56,7 +72,7 @@
                     <!-- FI Columna Objservacions -->
                 </h:dataTable>
                 <h:panelGrid>
-                    <h:commandButton value="Nou" action="editPartit" />
+                    <h:commandButton value="Nou" action="editPartit" actionListener="#{partitBean.crearPartitListener}"/>
                 </h:panelGrid>
             </h:form>
         </f:view>

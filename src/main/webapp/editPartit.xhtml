@@ -12,32 +12,33 @@
         <h:form>
             <h:panelGrid id="MainGrid" columns="2">
                 <h:outputText value="Equip Local" />
-                <h:selectOneMenu id="equipLocal">
+                <h:selectOneMenu id="equipLocal" value="#{partitBean.partit.equipsByIdEquipLocal}">
                     <f:selectItems value="#{lligaBean.equips}"  />                  
                 </h:selectOneMenu>
                 <h:outputText value="Equip Visitant" />
-                <h:selectOneMenu>
+                <h:selectOneMenu id="equipVisitant" value="#{partitBean.partit.equipByIdEquipVisitant}">
                      <f:selectItems value="#{lligaBean.equips}"/>
                 </h:selectOneMenu>
                 <h:outputText value="Jornada" />
-                <h:selectOneMenu>
+                <h:selectOneMenu value="#{partitBean.partit.jornada}">
                     <f:selectItems value="#{lligaBean.jornades}"/>
                 </h:selectOneMenu>
                 <h:outputText value="Data"></h:outputText>
-                <h:inputText />
+                <h:inputText value="#{partitBean.partit.data}"/>
                 <h:outputText value="Resultat" />
                 <h:panelGroup>
-                    <h:inputText size="2"/>
+                    <h:inputText size="2" value="#{partitBean.partit.golsLocal}"/>
                     <h:outputText value="-" />
-                    <h:inputText size="2"/>
+                    <h:inputText size="2" value="#{partitBean.partit.golsVisitant}"/>
                     <h:selectBooleanCheckbox>
                         <h:outputText value="Per Jugar"/>
                     </h:selectBooleanCheckbox>
                 </h:panelGroup>
                 <h:outputText value="Observacions" />
-                <h:inputTextarea rows="10" />
+                <h:inputTextarea rows="10" value="#{partitBean.partit.observacions}"/>
                 
-                <h:commandButton value="Cancelar" action="index" />
+                <h:commandButton value="Cancelar" action="llistaPartits" />
+                <h:commandButton value="Guardar" action="llistaPartits" actionListener="#{partitBean.guardarListener}" />
             </h:panelGrid>
         </h:form>
     </body>
