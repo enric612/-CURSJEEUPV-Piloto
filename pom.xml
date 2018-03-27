@@ -9,6 +9,8 @@
     <url>http://maven.apache.org</url>
     <properties>
         <version.javaee-api>8.0</version.javaee-api>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -20,7 +22,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <dependencies>
+    <dependencies>        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -35,7 +37,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.2.16.Final</version>
+        </dependency>        
+        <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.2</version>           
         </dependency>
+
     </dependencies>
     <build>
         <finalName>piloto</finalName>
