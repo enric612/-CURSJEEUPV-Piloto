@@ -22,7 +22,7 @@ public class EquipDAOImpl extends GenericHibernateDAO implements EquipDAO {
 
     @Override
     public List<Equip> findAll() {
-        Query q = getSession().createQuery("From Equipo");
+        Query q = getSession().createQuery("From Equip");
         return q.list();
     }
 

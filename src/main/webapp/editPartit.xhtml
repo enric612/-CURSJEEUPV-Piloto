@@ -4,33 +4,24 @@
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-        <title>Editar Partit</title>
+        <title>Lliga de Futbol | Editar Partit</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8"/>
     </head>
     <body>
         <h:form>
-            <h:panelGrid border="1" columns="2">
+            <h:panelGrid id="MainGrid" columns="2">
                 <h:outputText value="Equip Local" />
-                <h:selectOneMenu>
-                    <f:selectItem itemValue="0" itemLabel="Valencia"></f:selectItem>
-                    <f:selectItem itemValue="1" itemLabel="Barcelona"></f:selectItem>
-                    <f:selectItem itemValue="2" itemLabel="Madrid"></f:selectItem>
-                    <f:selectItem itemValue="3" itemLabel="Levante"></f:selectItem>
+                <h:selectOneMenu id="equipLocal">
+                    <f:selectItems value="#{lligaBean.equips}"  />                  
                 </h:selectOneMenu>
                 <h:outputText value="Equip Visitant" />
                 <h:selectOneMenu>
-                    <f:selectItem itemValue="0" itemLabel="Valencia"></f:selectItem>
-                    <f:selectItem itemValue="1" itemLabel="Barcelona"></f:selectItem>
-                    <f:selectItem itemValue="2" itemLabel="Madrid"></f:selectItem>
-                    <f:selectItem itemValue="3" itemLabel="Levante"></f:selectItem>
+                     <f:selectItems value="#{lligaBean.equips}"/>
                 </h:selectOneMenu>
                 <h:outputText value="Jornada" />
                 <h:selectOneMenu>
-                    <f:selectItem itemValue="1" itemLabel="1"></f:selectItem>
-                    <f:selectItem itemValue="2" itemLabel="2"></f:selectItem>
-                    <f:selectItem itemValue="3" itemLabel="3"></f:selectItem>
-                    <f:selectItem itemValue="4" itemLabel="4"></f:selectItem>
+                    <f:selectItems value="#{lligaBean.jornades}"/>
                 </h:selectOneMenu>
                 <h:outputText value="Data"></h:outputText>
                 <h:inputText />
