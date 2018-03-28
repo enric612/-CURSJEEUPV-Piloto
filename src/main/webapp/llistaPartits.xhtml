@@ -38,6 +38,16 @@
                         <h:outputText value="#{partit.jornada}"/>
                     </h:column>
                     <!--FI Columna Jornada -->
+                    <!-- Columna Data -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Data" />
+                        </f:facet>
+                        <h:outputText value="#{partit.data}">
+                            <f:convertDateTime pattern="dd/MM/YYYY"/>
+                        </h:outputText>
+                    </h:column>
+                    <!-- Fi Columna Data -->
                     <!-- Columna Local -->
                     <h:column>
                         <f:facet name="header">
