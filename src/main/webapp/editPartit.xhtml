@@ -51,7 +51,7 @@
                 <h:outputText value="Observacions" />
                 <h:inputTextarea rows="10" value="#{partitBean.partit.observacions}"/>
                 
-                <h:commandButton value="Cancelar" action="llistaPartits" />
+                <h:commandButton value="Cancelar" action="llistaPartits" immediate="true"/>
                 <h:commandButton value="Guardar" action="llistaPartits" actionListener="#{partitBean.guardarListener}" />
             </h:panelGrid>
         </h:form>
