@@ -6,17 +6,22 @@
 package ovh.ecliment.cjee.piloto.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.ManagedProperty;
+import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import ovh.ecliment.cjee.piloto.dao.DAOFactory;
 import ovh.ecliment.cjee.piloto.dao.HibernateUtil;
+import ovh.ecliment.cjee.piloto.domini.Equip;
 import ovh.ecliment.cjee.piloto.domini.Partit;
 
 /**
@@ -33,6 +38,11 @@ public class PartitBean implements Serializable {
     private List<Partit> llistaDePartits;
     private String equip;
     private String selectedPartit;
+    private List<Equip> equipsLocals;
+    private List<Equip> equipsVisitants;
+    // BD de la sessio
+    private Equip local;
+    private Equip visitant;
 
     public String getSelectedPartit() {
         return this.selectedPartit;
@@ -43,13 +53,21 @@ public class PartitBean implements Serializable {
     }
 
     // JSF 2.3  + CDI 2.0 Gracies!!
-    /*
     @Inject
-    private FacesContext facesContext;*/
+    private FacesContext facesContext;
     // Per poder accedir directament sense passar per llistaPartits.xhtml
+
+    @Inject
+    private LligaBean bean;
+
     @PostConstruct
     public void init() {
-        //crearPartit(); // Si activem la propietat @ManagePrpoperty es pot comentar
+        //crearPartit(); // Si activem la propietat @ManagePrpoperty es pot comentar   
+        // Evitem el tema de clonar malament llistes i eliminem els elements 
+        // seleccionats per defecte
+        this.local = bean.getEquips().get(0);
+        this.visitant = bean.getEquips().get(1);
+        actualitzarEquips();
     }
 
     /* CRUD */
@@ -66,7 +84,7 @@ public class PartitBean implements Serializable {
     }
 
     public List<Partit> getLlistaDePartits() {
-        this.llistaDePartits = DAOFactory.getPartitDAO().findAll();      
+        this.llistaDePartits = DAOFactory.getPartitDAO().findAll();
         return this.llistaDePartits;
     }
 
@@ -79,7 +97,7 @@ public class PartitBean implements Serializable {
             llistaDePartits = DAOFactory.getPartitDAO().findAll();
         } else {
             llistaDePartits = DAOFactory.getPartitDAO().findByJornada(jornada);
-        }      
+        }
     }
 
     public String getEquip() {
@@ -102,6 +120,22 @@ public class PartitBean implements Serializable {
         DAOFactory.getPartitDAO().save(partit);
     }
 
+    public List<Equip> getEquipsLocals() {
+        return equipsLocals;
+    }
+
+    public void setEquipsLocals(List<Equip> equipsLocals) {
+        this.equipsLocals = equipsLocals;
+    }
+
+    public List<Equip> getEquipsVisitants() {
+        return equipsVisitants;
+    }
+
+    public void setEquipsVisitants(List<Equip> equipsVisitants) {
+        this.equipsVisitants = equipsVisitants;
+    }
+
     /* LISTENERS */
     public void crearPartitListener(ActionEvent ae) {
         crearPartit();
@@ -121,7 +155,7 @@ public class PartitBean implements Serializable {
 
     public void eliminar(ActionEvent e) {
         String partitID = null;
-        partitID = (String) FacesContext.getCurrentInstance()
+        partitID = (String) facesContext
                 .getExternalContext().getRequestParameterMap()
                 .get("selectedPartit");
 
@@ -136,6 +170,40 @@ public class PartitBean implements Serializable {
             partit = DAOFactory.getPartitDAO()
                     .findById(Integer.valueOf(selectedPartit));
         }
+        actualitzarEquips();
+    }
+
+    private void actualitzarEquips() throws AbortProcessingException {
+        // Buidem i plenem
+        if (this.equipsLocals == null) {
+            this.equipsLocals = new ArrayList<Equip>();
+        }
+        this.equipsLocals.clear();
+        this.equipsLocals.addAll(bean.getEquips());
+        if (this.equipsVisitants == null) {
+            this.equipsVisitants = new ArrayList<Equip>();
+        }
+        this.equipsVisitants.clear();
+        this.equipsVisitants.addAll(bean.getEquips());
+
+        //Eliminem el que toca
+        this.equipsLocals.remove(this.visitant);
+        this.equipsVisitants.remove(this.local);
+        if (this.partit != null) {
+            this.partit.setEquipByIdEquipLocal(this.local);
+            this.partit.setEquipByIdEquipVisitant(this.visitant);
+        }
+
+    }
+
+    public void nouLocal(AjaxBehaviorEvent abe) throws AbortProcessingException {
+        this.local = (Equip) ((UIOutput) abe.getSource()).getValue();
+        actualitzarEquips();
+    }
+
+    public void nouVisitant(AjaxBehaviorEvent abe) throws AbortProcessingException {
+        this.visitant = (Equip) ((UIOutput) abe.getSource()).getValue();
+        actualitzarEquips();
     }
 
 }

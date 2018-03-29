@@ -3,34 +3,44 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <head>
+    <h:head>
         <title>Lliga de Futbol | Editar Partit</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8"/>
-    </head>
-    <body>
         <f:metadata>
             <f:viewParam name="selectedPartit" 
                          value="#{partitBean.selectedPartit}"/>
             <f:event type="preRenderView" 
                      listener="#{partitBean.actualitzar}" />
         </f:metadata>
+    </h:head>
+    <body>
+        
         <h:form prependId="false">
             <h:panelGrid id="MainGrid" columns="2">
                 <h:outputText value="Equip Local" />
-                <h:selectOneMenu id="equipLocal" value="#{partitBean.partit.equipByIdEquipLocal}">
-                    <f:selectItems value="#{lligaBean.equips}"  var="equip" 
+                <h:selectOneMenu id="equipLocal" 
+                                 value="#{partitBean.partit.equipByIdEquipLocal}"
+                                 >
+                    <f:selectItems value="#{partitBean.equipsLocals}"  
+                                   var="equip" 
                                    itemLabel="#{equip.nom}" 
                                    itemValue="#{equip.idEquip}"/>   
                     <f:converter converterId="String2Equip" />
+                    <f:ajax listener="#{partitBean.nouLocal}" 
+                             render="@form" event="valueChange"/>
                 </h:selectOneMenu>
                 <h:outputText value="Equip Visitant" />
                 <h:selectOneMenu id="equipVisitant" 
-                                 value="#{partitBean.partit.equipByIdEquipVisitant}">
-                     <f:selectItems value="#{lligaBean.equips}" var="equip" 
+                                 value="#{partitBean.partit.equipByIdEquipVisitant}"
+                                 >
+                     <f:selectItems value="#{partitBean.equipsVisitants}" 
+                                    var="equip" 
                                    itemLabel="#{equip.nom}" 
                                    itemValue="#{equip.idEquip}"/>
                      <f:converter converterId="String2Equip" />
+                     <f:ajax listener="#{partitBean.nouVisitant}" 
+                             render="@form" event="valueChange"/>
                 </h:selectOneMenu>
                 <h:outputText value="Jornada" />
                 <h:selectOneMenu value="#{partitBean.partit.jornada}">
@@ -59,7 +69,7 @@
                 
                 <h:commandButton value="Cancelar" action="llistaPartits" immediate="true"/>
                 <h:commandButton value="Guardar" action="llistaPartits" actionListener="#{partitBean.guardarListener}" />
-            </h:panelGrid>
+            </h:panelGrid>           
         </h:form>
     </body>
 </html>

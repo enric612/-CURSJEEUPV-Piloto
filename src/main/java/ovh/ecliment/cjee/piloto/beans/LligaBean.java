@@ -6,12 +6,19 @@
 package ovh.ecliment.cjee.piloto.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.ManagedProperty;
+import javax.faces.annotation.SessionMap;
+import javax.inject.Inject;
 import javax.inject.Named;
 import ovh.ecliment.cjee.piloto.dao.DAOFactory;
 import ovh.ecliment.cjee.piloto.domini.Equip;
+import ovh.ecliment.cjee.piloto.domini.Partit;
 
 /**
  *
@@ -33,6 +40,16 @@ public class LligaBean implements Serializable {
     // compilar una app com esta o mes gran es mes rapid que editar manualment
     // un xml dins de un paquet i mes si es gaste eines com maven/gradle.    
     private int numJornades = 38;
+    private List<Equip> equips;
+
+
+    @PostConstruct
+    public void init() {
+        if (this.equips == null) {
+            this.equips = DAOFactory.getEquipDAO().findAll();
+        }
+        
+    }
 
     public String[] getJornades() {
         if (jornades == null) {
@@ -48,17 +65,16 @@ public class LligaBean implements Serializable {
         this.jornades = jornades;
     }
 
-    private List<Equip> equips;
-
     public List<Equip> getEquips() {
         if (this.equips == null) {
             this.equips = DAOFactory.getEquipDAO().findAll();
         }
         return equips;
     }
-    
-    public void setEquips(List<Equip> equips){
+
+    public void setEquips(List<Equip> equips) {
         this.equips = equips;
     }
 
+    
 }
