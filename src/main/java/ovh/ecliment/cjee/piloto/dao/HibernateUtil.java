@@ -22,7 +22,6 @@ import ovh.ecliment.cjee.piloto.domini.Equip;
 import ovh.ecliment.cjee.piloto.domini.Jugador;
 import ovh.ecliment.cjee.piloto.domini.Partit;
 
-
 /**
  * @author ecliment
  */
@@ -34,9 +33,8 @@ public class HibernateUtil {
     private static Transaction tx;
 
     public static Session getSession() {
-        if (session == null) {
-            getSessionFactory();
-            return sessionFactory.openSession();
+        if (session == null) {            
+            session = getSessionFactory().openSession();
         }
         return session;
     }
@@ -53,52 +51,45 @@ public class HibernateUtil {
     }
 
     public static void endTransaction() {
-        tx.commit();
-        tx = null;
+        getSession().flush();
+        
     }
 
     public static SessionFactory getSessionFactory() {
-        
-            try {                
+        if (sessionFactory == null) {
+            try {
                 // Create registry builder
-                StandardServiceRegistryBuilder registryBuilder = 
-                        new StandardServiceRegistryBuilder();
+                StandardServiceRegistryBuilder registryBuilder
+                        = new StandardServiceRegistryBuilder();
 
-                
                 Map<String, String> settings = new HashMap<>();
                 settings.put(Environment.DRIVER, "org.hsqldb.jdbcDriver");
                 settings.put(Environment.URL,
                         "jdbc:hsqldb:hsql://localhost/futbol");
                 settings.put(Environment.USER, "sa");
                 settings.put(Environment.PASS, "");
-                settings.put(Environment.DIALECT, 
+                settings.put(Environment.DIALECT,
                         "org.hibernate.dialect.HSQLDialect");
-                
-                
 
                 // Apply settings
                 registryBuilder.applySettings(settings);
-                              
+
                 // Create registry
                 registry = registryBuilder.build();
-                
 
                 // Create MetadataSources
-                MetadataSources sources = new MetadataSources(registry);             
+                MetadataSources sources = new MetadataSources(registry);
                 // Configurem les classes amb anotacions
-                
+
                 sources.addAnnotatedClass(Partit.class);
                 sources.addAnnotatedClass(Equip.class);
                 sources.addAnnotatedClass(Jugador.class);
-                
+
                 // Create Metadata
                 Metadata metadata = sources.getMetadataBuilder().build();
-                
-               
 
                 // Create SessionFactory
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
-               
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,7 +97,8 @@ public class HibernateUtil {
                     StandardServiceRegistryBuilder.destroy(registry);
                 }
             }
-        
+        }
+
         return sessionFactory;
     }
 

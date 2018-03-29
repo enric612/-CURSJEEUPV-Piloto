@@ -42,9 +42,7 @@ public class PartitBean implements Serializable{
     }   
         
     public List<Partit> getLlistaDePartits(){
-        if(this.llistaDePartits==null){
-            this.llistaDePartits=DAOFactory.getPartitDAO().findAll();
-        }
+        this.llistaDePartits=DAOFactory.getPartitDAO().findAll();     
         return this.llistaDePartits;
     }
     
@@ -74,10 +72,8 @@ public class PartitBean implements Serializable{
             llistaDePartits = DAOFactory.getPartitDAO().findByEquip(equip);
     }
     
-    private void guardar(){
-        HibernateUtil.beginTransaction();
-        DAOFactory.getPartitDAO().save(partit);
-        HibernateUtil.endTransaction();        
+    private void guardar(){       
+        DAOFactory.getPartitDAO().save(partit);        
     }
     
     /* LISTENERS */

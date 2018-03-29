@@ -54,10 +54,13 @@ public class Partit implements java.io.Serializable {
         this.idPartit = idPartido;
     }
 
-    public Partit(int idPartido, Equip equiposByIdEquipoLocal, Equip equiposByIdEquipoVisitante, Integer jornada, Date fecha, Integer golesLocal, Integer golesVisitante, String observaciones) {
+    public Partit(int idPartido, Equip equipByIdEquipLocal, 
+            Equip equipByIdEquipVisitante, Integer jornada, 
+            Date fecha, Integer golesLocal, Integer golesVisitante, 
+            String observaciones) {
         this.idPartit = idPartido;
-        this.equipByIdEquipLocal = equiposByIdEquipoLocal;
-        this.equipByIdEquipVisitant = equiposByIdEquipoVisitante;
+        this.equipByIdEquipLocal = equipByIdEquipLocal;
+        this.equipByIdEquipVisitant = equipByIdEquipVisitante;
         this.jornada = jornada;
         this.data = fecha;
         this.golsLocal = golesLocal;
@@ -74,11 +77,11 @@ public class Partit implements java.io.Serializable {
     }
 
     
-    public Equip getEquipsByIdEquipLocal() {
+    public Equip getEquipByIdEquipLocal() {
         return this.equipByIdEquipLocal;
     }
 
-    public void setEquipsByIdEquipLocal(Equip equipByIdEquipLocal) {
+    public void setEquipByIdEquipLocal(Equip equipByIdEquipLocal) {
         this.equipByIdEquipLocal = equipByIdEquipLocal;
     }
 
@@ -87,7 +90,7 @@ public class Partit implements java.io.Serializable {
         return this.equipByIdEquipVisitant;
     }
 
-    public void setEquipsByIdEquipVisitant(Equip equipByIdEquipVisitant) {
+    public void setEquipByIdEquipVisitant(Equip equipByIdEquipVisitant) {
         this.equipByIdEquipVisitant = equipByIdEquipVisitant;
     }
 

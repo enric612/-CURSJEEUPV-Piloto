@@ -12,12 +12,19 @@
         <h:form>
             <h:panelGrid id="MainGrid" columns="2">
                 <h:outputText value="Equip Local" />
-                <h:selectOneMenu id="equipLocal" value="#{partitBean.partit.equipsByIdEquipLocal}">
-                    <f:selectItems value="#{lligaBean.equips}"  />                  
+                <h:selectOneMenu id="equipLocal" value="#{partitBean.partit.equipByIdEquipLocal}">
+                    <f:selectItems value="#{lligaBean.equips}"  var="equip" 
+                                   itemLabel="#{equip.nom}" 
+                                   itemValue="#{equip.idEquip}"/>   
+                    <f:converter converterId="String2Equip" />
                 </h:selectOneMenu>
                 <h:outputText value="Equip Visitant" />
-                <h:selectOneMenu id="equipVisitant" value="#{partitBean.partit.equipByIdEquipVisitant}">
-                     <f:selectItems value="#{lligaBean.equips}"/>
+                <h:selectOneMenu id="equipVisitant" 
+                                 value="#{partitBean.partit.equipByIdEquipVisitant}">
+                     <f:selectItems value="#{lligaBean.equips}" var="equip" 
+                                   itemLabel="#{equip.nom}" 
+                                   itemValue="#{equip.idEquip}"/>
+                     <f:converter converterId="String2Equip" />
                 </h:selectOneMenu>
                 <h:outputText value="Jornada" />
                 <h:selectOneMenu value="#{partitBean.partit.jornada}">
@@ -25,7 +32,7 @@
                 </h:selectOneMenu>
                 <h:outputText value="Data"></h:outputText>
                 <h:inputText value="#{partitBean.partit.data}">
-                    <f:convertDateTime pattern="dd/MM/YYYY"/>
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </h:inputText>
                 <h:outputText value="Resultat" />
                 <h:panelGroup>

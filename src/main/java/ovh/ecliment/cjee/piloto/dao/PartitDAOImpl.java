@@ -10,6 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ovh.ecliment.cjee.piloto.domini.Partit;
 
@@ -40,7 +41,7 @@ public class PartitDAOImpl extends GenericHibernateDAO implements PartitDAO {
 
     @Override
     public List<Partit> findByEquip(String equip) {
-       Query q = getSession().createQuery("From Partit p "
+        Query q = getSession().createQuery("From Partit p "
                 + "where p.equipByIdEquipLocal.nom = ?"
                 + "or p.equipByIdEquipVisitant.nom = ?");
 
@@ -68,12 +69,30 @@ public class PartitDAOImpl extends GenericHibernateDAO implements PartitDAO {
 
     @Override
     public void save(Partit entity) {
-        getSession().saveOrUpdate(entity);
+        Transaction transaction = null;
+        try {
+            transaction = getSession().getTransaction();
+            transaction.begin();
+            getSession().saveOrUpdate(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (getSession() != null) {
+                getSession().close();
+            }
+        }
     }
 
-    @Override
-    public void remove(Partit entity) {
+        @Override
+        public void remove
+        (Partit entity
+        
+            ) {
         getSession().delete(entity);
-    }
+        }
 
-}
+    }
