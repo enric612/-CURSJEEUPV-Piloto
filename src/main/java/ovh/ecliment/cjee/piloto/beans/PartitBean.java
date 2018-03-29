@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.annotation.ManagedProperty;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
@@ -24,7 +25,8 @@ import ovh.ecliment.cjee.piloto.domini.Partit;
 @SessionScoped
 public class PartitBean implements Serializable{
     
-    private static final long serialVersionUID = 2467055050267808697L;
+    private static final long serialVersionUID = 2467055050267808697L;    
+    @ManagedProperty(value="#{partit}")
     private Partit partit;
     private List<Partit> llistaDePartits;
     private String equip;
@@ -32,7 +34,7 @@ public class PartitBean implements Serializable{
     // Per poder accedir directament sense passar per llistaPartits.xhtml
     @PostConstruct
     public void init() {
-        crearPartit();
+        //crearPartit(); // Si activem la propietat @ManagePrpoperty es pot comentar
     }
         
     /* CRUD */

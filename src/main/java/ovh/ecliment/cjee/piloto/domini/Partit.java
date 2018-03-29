@@ -2,6 +2,8 @@ package ovh.ecliment.cjee.piloto.domini;
 // Generated 26-mar-2018 13:41:13 by Hibernate Tools 4.3.1
 
 import java.util.Date;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +24,8 @@ import org.hibernate.annotations.GenericGenerator;
          schema = "PUBLIC",
          catalog = "PUBLIC"
 )
+// @NoneScoped esta "deprecated" en favor de @Dependent que es CDI 2.0 compatible
+@Dependent
 public class Partit implements java.io.Serializable {
 
     @Id
@@ -137,6 +141,15 @@ public class Partit implements java.io.Serializable {
 
     public void setObservacions(String observacions) {
         this.observacions = observacions;
+    }
+    
+    public Boolean valid(){
+        return this.equipByIdEquipLocal != null 
+                && this.equipByIdEquipVisitant != null
+                && this.jornada != null
+                && this.golsLocal != null && this.golsLocal >= 0
+                && this.golsVisitant != null && this.golsVisitant >= 0
+                && this.data != null;
     }
 
 }
