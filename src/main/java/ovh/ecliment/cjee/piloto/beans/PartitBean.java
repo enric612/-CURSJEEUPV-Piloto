@@ -7,6 +7,7 @@ package ovh.ecliment.cjee.piloto.beans;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -27,6 +28,12 @@ public class PartitBean implements Serializable{
     private Partit partit;
     private List<Partit> llistaDePartits;
     private String equip;
+    
+    // Per poder accedir directament sense passar per llistaPartits.xhtml
+    @PostConstruct
+    public void init() {
+        crearPartit();
+    }
         
     /* CRUD */
     private void crearPartit(){

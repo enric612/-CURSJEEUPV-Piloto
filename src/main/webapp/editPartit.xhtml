@@ -31,8 +31,9 @@
                     <f:selectItems value="#{lligaBean.jornades}"/>
                 </h:selectOneMenu>
                 <h:outputText value="Data"></h:outputText>
-                <h:inputText value="#{partitBean.partit.data}">
+                <h:inputText value="#{partitBean.partit.data}" required="true">
                     <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    <f:validator validatorId="dateValidator"/>
                 </h:inputText>
                 <h:outputText value="Resultat" />
                 <h:panelGroup>
