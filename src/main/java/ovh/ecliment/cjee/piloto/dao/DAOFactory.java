@@ -14,11 +14,9 @@ import org.hibernate.SessionFactory;
  */
 public class DAOFactory {
     
-    public static PartitDAO getPartitDAO(){
+    public static PartitDAO getPartitDAO(){        
         
-        SessionFactory sf = HibernateUtil.getSessionFactory();
-        Session session = sf.openSession();
-        
+        Session session = HibernateUtil.getSession();        
         return new PartitDAOImpl(session);
     }
     

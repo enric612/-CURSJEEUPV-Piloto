@@ -33,15 +33,17 @@ public class HibernateUtil {
     private static Transaction tx;
 
     public static Session getSession() {
-        if (session == null) {            
+        if (session == null || !session.isOpen()) {
             session = getSessionFactory().openSession();
         }
         return session;
     }
 
     public static void closeSession() {
+        if (session != null ){
         session.close();
         session = null;
+        }
     }
 
     public static void beginTransaction() {
@@ -51,8 +53,9 @@ public class HibernateUtil {
     }
 
     public static void endTransaction() {
-        getSession().flush();
-        
+        tx.commit();
+        tx = null;       
+
     }
 
     public static SessionFactory getSessionFactory() {

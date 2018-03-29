@@ -9,6 +9,12 @@
         <meta charset="UTF-8"/>
     </head>
     <body>
+        <f:metadata>
+            <f:viewParam name="selectedPartit" 
+                         value="#{partitBean.selectedPartit}"/>
+            <f:event type="preRenderView" 
+                     listener="#{partitBean.actualitzar}" />
+        </f:metadata>
         <h:form prependId="false">
             <h:panelGrid id="MainGrid" columns="2">
                 <h:outputText value="Equip Local" />

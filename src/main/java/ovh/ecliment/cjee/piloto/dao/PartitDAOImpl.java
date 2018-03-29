@@ -69,6 +69,7 @@ public class PartitDAOImpl extends GenericHibernateDAO implements PartitDAO {
 
     @Override
     public void save(Partit entity) {
+        
         Transaction transaction = null;
         try {
             transaction = getSession().getTransaction();
@@ -85,14 +86,28 @@ public class PartitDAOImpl extends GenericHibernateDAO implements PartitDAO {
                 getSession().close();
             }
         }
+
     }
 
         @Override
-        public void remove
-        (Partit entity
-        
-            ) {
-        getSession().delete(entity);
+        public void remove(Partit entity) {
+            Transaction transaction = null;
+        try {
+            transaction = getSession().getTransaction();
+            transaction.begin();
+            getSession().merge(entity);
+            getSession().delete(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (getSession() != null) {
+                getSession().close();
+            }
+        }
         }
 
     }

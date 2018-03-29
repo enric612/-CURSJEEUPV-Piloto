@@ -9,6 +9,7 @@
         <title>Lliga de futbol</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8"/>
+        
     </head>
     <body>
         <f:view>
@@ -90,6 +91,30 @@
                         <h:outputText value="#{partit.observacions}"/>
                     </h:column>
                     <!-- FI Columna Objservacions -->
+                    <!-- Botons -->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Operacions" />
+                        </f:facet>
+                        <h:panelGroup>
+                            <h:commandButton value="Eliminar" action="llistaPartits"
+                                             onclick="return confirm(
+                                            'Vas a eliminar un partit. Segur?'
+                                                         )"
+                                            actionListener="#{partitBean.eliminar}" 
+                                            >
+                                <f:param name="selectedPartit" 
+                                         value="#{partit.idPartit}" 
+                                         />
+                            </h:commandButton>
+                            <h:button value="Editar" outcome="editPartit" >
+                                <f:param name="selectedPartit" 
+                                         value="#{partit.idPartit}" 
+                                         />
+                            </h:button> 
+                        </h:panelGroup>
+                    </h:column>
+                    <!-- Fi Botons -->
                 </h:dataTable>
                 <h:panelGrid>
                     <!-- Si eliminem el actionListener 
