@@ -119,6 +119,29 @@ public class PartitBean implements Serializable {
     private void guardar() {
         DAOFactory.getPartitDAO().save(partit);
     }
+    
+    private void actualitzarEquips() throws AbortProcessingException {
+        // Buidem i plenem
+        if (this.equipsLocals == null) {
+            this.equipsLocals = new ArrayList<Equip>();
+        }
+        this.equipsLocals.clear();
+        this.equipsLocals.addAll(bean.getEquips());
+        if (this.equipsVisitants == null) {
+            this.equipsVisitants = new ArrayList<Equip>();
+        }
+        this.equipsVisitants.clear();
+        this.equipsVisitants.addAll(bean.getEquips());
+
+        //Eliminem el que toca
+        this.equipsLocals.remove(this.visitant);
+        this.equipsVisitants.remove(this.local);
+        if (this.partit != null) {
+            this.partit.setEquipByIdEquipLocal(this.local);
+            this.partit.setEquipByIdEquipVisitant(this.visitant);
+        }
+
+    }
 
     public List<Equip> getEquipsLocals() {
         return equipsLocals;
@@ -173,28 +196,7 @@ public class PartitBean implements Serializable {
         actualitzarEquips();
     }
 
-    private void actualitzarEquips() throws AbortProcessingException {
-        // Buidem i plenem
-        if (this.equipsLocals == null) {
-            this.equipsLocals = new ArrayList<Equip>();
-        }
-        this.equipsLocals.clear();
-        this.equipsLocals.addAll(bean.getEquips());
-        if (this.equipsVisitants == null) {
-            this.equipsVisitants = new ArrayList<Equip>();
-        }
-        this.equipsVisitants.clear();
-        this.equipsVisitants.addAll(bean.getEquips());
-
-        //Eliminem el que toca
-        this.equipsLocals.remove(this.visitant);
-        this.equipsVisitants.remove(this.local);
-        if (this.partit != null) {
-            this.partit.setEquipByIdEquipLocal(this.local);
-            this.partit.setEquipByIdEquipVisitant(this.visitant);
-        }
-
-    }
+    
 
     public void nouLocal(AjaxBehaviorEvent abe) throws AbortProcessingException {
         this.local = (Equip) ((UIOutput) abe.getSource()).getValue();
