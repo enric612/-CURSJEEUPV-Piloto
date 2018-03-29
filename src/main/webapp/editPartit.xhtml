@@ -9,7 +9,7 @@
         <meta charset="UTF-8"/>
     </head>
     <body>
-        <h:form>
+        <h:form prependId="false">
             <h:panelGrid id="MainGrid" columns="2">
                 <h:outputText value="Equip Local" />
                 <h:selectOneMenu id="equipLocal" value="#{partitBean.partit.equipByIdEquipLocal}">
@@ -31,17 +31,17 @@
                     <f:selectItems value="#{lligaBean.jornades}"/>
                 </h:selectOneMenu>
                 <h:outputText value="Data"></h:outputText>
-                <h:inputText value="#{partitBean.partit.data}" required="true">
+                <h:inputText id="data" value="#{partitBean.partit.data}" required="true">
                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                     <f:validator validatorId="dateValidator"/>
                 </h:inputText>
                 <h:outputText value="Resultat" />
                 <h:panelGroup>
-                    <h:inputText size="2" value="#{partitBean.partit.golsLocal}" required="true">
+                    <h:inputText id="golsLocal" size="2" value="#{partitBean.partit.golsLocal}" required="true">
                         <f:validateLongRange minimum="0" />
                     </h:inputText>
                     <h:outputText value="-" />
-                    <h:inputText size="2" value="#{partitBean.partit.golsVisitant}" required="true">
+                    <h:inputText id="golsVisitant" size="2" value="#{partitBean.partit.golsVisitant}" required="true">
                         <f:validateLongRange minimum="0" />
                     </h:inputText>
                     <h:selectBooleanCheckbox>
